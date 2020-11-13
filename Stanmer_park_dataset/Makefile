@@ -1,4 +1,4 @@
-IN_CSV := $(shell find -name coordinates.csv)
+IN_CSV := $(shell find . -name coordinates.csv)
 OUT_CSV = $(IN_CSV:coordinates.csv=database_entries.csv)
 
 .PHONY: all
