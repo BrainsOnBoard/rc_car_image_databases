@@ -1,0 +1,3 @@
+## The contents of this folder have moved...
+
+But there are symlinks so as not to break existing scripts.
