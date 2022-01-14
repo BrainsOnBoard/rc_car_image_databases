@@ -1,0 +1,10 @@
+%YAML:1.0
+---
+metadata:
+  type: route
+  camera:
+     name: pixpro_usb
+     resolution: [ 1440, 1440 ]
+     isPanoramic: 1
+  needsUnwrapping: 1
+  isGreyscale: 0
