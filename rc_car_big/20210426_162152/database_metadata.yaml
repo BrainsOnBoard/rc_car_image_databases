@@ -8,3 +8,6 @@ metadata:
      isPanoramic: 1
   needsUnwrapping: 1
   isGreyscale: 0
+  videoFile: 20210426_162152.mp4
+  frameRate: 15
+  image_database_to_video_git_commit: 2133c27e-dirty
