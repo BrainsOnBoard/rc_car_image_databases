@@ -1,0 +1,13 @@
+%YAML:1.0
+---
+metadata:
+  type: route
+  camera:
+     name: pixpro_usb
+     resolution: [ 1440, 1440 ]
+     isPanoramic: 1
+  needsUnwrapping: 1
+  isGreyscale: 0
+  videoFile: "20210420_141940.mp4"
+  frameRate: 15
+  image_database_to_video_git_commit: "2133c27e-dirty"
