@@ -10,7 +10,7 @@ from tools import unroll
 files= os.listdir(".")
 data= []
 for i in files:
-    if i[:4] == '2021':
+    if i.startswith('unwrapped_2021'):
         data.append(i)
 
 sz= int(np.ceil(np.sqrt(len(data))))
@@ -19,6 +19,7 @@ py= 0
 px= 0
 degree= 1
 for dname in data:
+    print(dname)
     db2= pd.read_csv(dname+'/database_entries_processed.csv')
     t= db2["Timestamp [ms]"].to_numpy(copy=True)
     h= db2["Heading [degrees]"].to_numpy(copy=True)
@@ -26,7 +27,7 @@ for dname in data:
     uh= unroll(-h) # IMU recorded heading appears to be clockwise?!? - so taking the negative here
     gps_h= unroll(gps_h)
     dh = np.diff(uh)  
-    idx= np.array(range(dh.shape[0]),dtype=int)[abs(dh) > 15]
+    idx= np.array(range(dh.shape[0]),dtype=int)[abs(dh) > 45]
     nh= uh.copy() 
     for i in idx:
         print(i)

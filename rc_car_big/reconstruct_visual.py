@@ -10,7 +10,7 @@ from tools import deg_to_rad
 files= os.listdir(".")
 data= []
 for i in files:
-    if i[:4] == '2021':
+    if i.startswith('unwrapped_2021'):
         data.append(i)
 
 degree= 1

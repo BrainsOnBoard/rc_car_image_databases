@@ -16,7 +16,7 @@ for i in files:
         data.append(i)
 
 for dname in data:
-    db2= pd.read_csv(dname+'/database_entries.csv')
+    db2= pd.read_csv(dname+'/database_entries.csv',sep=r',',skipinitialspace=True)
     t= db2["Timestamp [ms]"].to_numpy(copy=True)
     x= db2["X [mm]"].to_numpy(copy=True)
     y= db2["Y [mm]"].to_numpy(copy=True)

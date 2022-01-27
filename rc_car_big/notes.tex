@@ -216,4 +216,106 @@ heading data is quite accurate. There is a little bit of cheating
 involved here through providing ``perfect speed information'' but that
 does not take away from the fact that the heading data is overall mostly right.
 
+\section{Examining images}
+When observing odd trajectory bits in the generated trajectory movies,
+it is unclear what might have happened. We, therefore, visually
+inspected the camera footage of all datasets and identified obvious
+abnormalities. These were essentially, the robot being still because
+of a minor repair, or backing up briefly because stuck on
+something. We manually identified the following segments: 
+\begin{enumerate}
+  \item
+\verb+unwrapped_20210303_150314+ starts at 131; ends at tree 11304, no anomalies.
+  \item
+\verb+unwrapped_20210303_153749+ start at 125; ends at tree at about 10379 frames,
+no anomalies.
+  \item
+\verb+unwrapped_20210308_122125+ starts at 151; ends at tree at about 9700 frames, no anomalies.
+  \item
+\verb+unwrapped_20210308_124836+ starts at 148; in between it looks like a loose cable or a thin
+branch stuck on the robot; at 4209 strange maneuver to the left, back
+out, continue, normal again from 4338; 5336 driving against a tree,
+back out, continues route approx 5367; 8885 to 8906 slight stuck and
+back out maneuver; 9044 to 9074 stuck and back up; ends at tree about
+10333.
+  \item
+\verb+unwrapped_20210322_155544+ starts at 383; 5420: taking a left turn because
+there are people in the way where he normally drives on the right of the
+prominent tree; reaches the tree at 9851 but then drives off into
+another direction without stopping
+  \item
+\verb+unwrapped_20210322_170743+ starts a 117; robot stuck at 7479, continues at
+7608; reaches tree 9310, then drives off
+  \item
+\verb+unwrapped_20210414_151116+ start at 127; reaches tree 9157, then
+drives off
+  \item
+\verb+unwrapped_20210420_135721+ start at 339; 6294 to 6326 robot goes
+back and forth; same 6759 to 6781; 7138 to 7163; 7174 to 7209; 7834 to
+7853; 8256 to 8280; 8371 to 8389; reaches tree at 10026 but the last
+bit of the route looked visually as if it was too far to the left!
+  \item
+\verb+unwrapped_20210420_141940+ start at 86; reaches tree 9410 then
+takes off.
+  \item
+\verb+unwrapped_20210422_134815+ start at 135; doesn't go to the tree!
+Instead to a different stopping point where it stands still for quite a
+while ...
+  \item
+\verb+unwrapped_20210426_162152+ starts at 50; reaches tree 3673 -
+very fast driving on this one!
+  \item
+\verb+unwrapped_20210426_164219+ starts at 69; frames stop prematurely
+at 3129; this is in agreement with the csv files.
+  \item
+\verb+unwrapped_20210511_151514+ starts at 199; 1377 to 1414 back and
+forth; from about frame $3635$ to $3925$ the robot stood still while
+Norbert was fixing the robot (apparently something had fallen off);
+reaches tree 10357 
+  \item
+\verb+unwrapped_20210511_153933+ starts at 112; reaches tree at 10099,
+then drives off
+  \item
+\verb+unwrapped_20210525_141844+ starts at 154; stops at tree 8764
+rest is irrelevant.
+\end{enumerate}
+
+The manual exclusions were coded into a new script
+\verb+zero_chop_visual.py+ which operates on the data tables in the
+\verb+unwrapped_*+ directories. There are
+\verb+fit_trajectories_visual.py+ and \verb+correct_heading_visual.py+
+scripts that essentially recapitulate the workflow above for the
+manually cut data. The results are essentially of similar quality,
+with some of the obvious artifacts removed.
+
+The \verb+make_movie_frames_visual.py+ script improves on teh previous
+script by including the camera feed into the movie so that one can now
+see the reconstructed trajectories and headings in conjunction with
+the views from the camera.
+
+There is also a \verb+reconstruct_visual.py+ and
+\verb+reconstruct_visual_greedy.py+ script. The former recapitulates
+\verb+reconstruct.py+ but on the manually trimmed data sets. The
+\verb+_greedy+ version is trying to reconstruct the trajectory based
+on IMU data but rather than using the distance travelled between
+corresponding points on the fitted trajectory, it is determining the
+distance travelled that will minimise the distance of the IMU
+trajectory point to the corresponding fitted trajectory point. I named
+it greedy, as it is optimising this in a greedy way from the start of
+the trajectory and this local minimisation of divergence between
+trajectories can of course lead to larger divergences later on.
+
+I have also tried a global optimisation using the Nelder-Mead simplex
+alogrithm on the vector of all distances travelled but it appears that
+this probem might be too high-dimensional/ the optimisation to be too
+slow to be useful.
+
+
+
+\section{Appendix}
+To make the movies I used
+\begin{verbatim}
+ffmpeg -framerate 10 -pattern_type  glob -i "frame_*.png" output.mp4
+\end{verbatim}
+
 \end{document}
