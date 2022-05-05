@@ -1,11 +1,10 @@
-import numpy as np
-import sys
-sys.path.append('../..')
-import navbench as nb
-import matplotlib.pyplot as plt
-import pandas as pd
 import os
-from tools import rad_to_deg
+import shutil
+
+# import bob_robotics.navigation as bobnav
+import numpy as np
+import pandas as pd
+# from tools import rad_to_deg
 
 # function to fit with
 fit_fun= np.polynomial.polynomial.Polynomial.fit
@@ -41,7 +40,7 @@ def fit_trajectory(t,x,y,z,num_p,degree):
         except:
             print("t={}: exception during fitting z".format(t[i]))
             ecntr+= 1
-        else:           
+        else:
             za[i:i+num_p]+= lfit(t[i:i+num_p])
             nz[i:i+num_p]+= np.ones(num_p)
     xa/= nx
@@ -72,7 +71,7 @@ for i in files:
 
 degree= 1
 num_p= 75
-        
+
 for dname in data:
     db2= pd.read_csv(dname+'/database_entries_processed.csv')
     t= db2["Timestamp [ms]"].to_numpy(copy=True)
@@ -82,12 +81,15 @@ for dname in data:
     xa, ya, za= fit_trajectory(t,x,y,z,num_p,degree)
     dx= np.diff(xa)
     dy= np.diff(ya)
-    gps_h= heading(dx,dy)
-    gps_h= rad_to_deg(gps_h)
-    gps_h= nb.normalise180(gps_h)
-    gps_h= np.hstack((gps_h,[gps_h[-1]]))
-    db2["fitted x deg {}".format(degree)]= xa
-    db2["fitted y deg {}".format(degree)]= ya
-    db2["fitted z deg {}".format(degree)]= za
-    db2["gps_h deg {}".format(degree)]= gps_h
-    db2.to_csv(dname+'/database_entries_processed.csv',index=False)
+    ## We don't really need the headings as they're computed on the fly by the database code now -- AD
+    # gps_h= heading(dx,dy)
+    # gps_h= rad_to_deg(gps_h)
+    # gps_h= bobnav.normalise180(gps_h)
+    # gps_h= np.hstack((gps_h,[gps_h[-1]]))
+    db2["X [mm]"]= xa
+    db2["Y [mm]"]= ya
+    db2["Z [mm]"]= za
+    # db2["gps_h deg {}".format(degree)]= gps_h
+    shutil.copyfile(dname+'/database_entries.csv', dname+'/database_entries_original.csv')
+    db2.to_csv(dname+'/database_entries.csv',index=False)
+    os.remove(dname+'/database_entries_processed.csv')
