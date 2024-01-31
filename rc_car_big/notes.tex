@@ -6,6 +6,9 @@
 \hoffset-3cm
 \voffset-3cm
 
+\renewcommand{\floatpagefraction}{0.85}
+\renewcommand{\topfraction}{0.75}
+
 \begin{document}
 \section{Basic examination and processing}
 Within this strand of work we are looking at the GPS and IMU data from
@@ -39,28 +42,28 @@ The first basic observations are:
     common, fairly consistent part.
 \end{enumerate}
 
-\begin{figure}
+\begin{figure}\begin{center}
   \includegraphics[width=
-    \textwidth]{figures/raw_trajectories_onepanel.png}
+    0.8\textwidth]{figures/raw_trajectories_onepanel.png}
   \caption{\label{fig:rawTraj1} Trajectories as recorded by GPS
     without any processing applied. All 15 datasets are shown.}
-\end{figure}
+\end{center}\end{figure}
 
-\begin{figure}
+\begin{figure}\begin{center}
   \includegraphics[width=
-    \textwidth]{figures/raw_trajectories_onepanel_detail.png}
+    0.8\textwidth]{figures/raw_trajectories_onepanel_detail.png}
   \caption{\label{fig:rawTrajDetail} Detail of previous figure focussing on
     the trajectory start.}
-\end{figure}
+\end{center}\end{figure}
 
-\begin{figure}
+\begin{figure}\begin{center}
   \includegraphics[width=
     \textwidth]{figures/raw_trajectories_manypanel.png}
   \caption{\label{fig:rawTraj2} Trajectories as recorded by GPS
     without any processing applied. All 15 datasets are shown. Mainly
     included here to be able to identify trajectories and the
     corresponding data set names.}
-\end{figure}
+\end{center}\end{figure}
 
 Based on the observations I have made the following first processing
 steps (\verb+zero_chop.py+):
@@ -75,19 +78,19 @@ steps (\verb+zero_chop.py+):
     by eyeballing the common part of all trajectories.
 \end{enumerate}
 The resulting trajectories are shown in figure \ref{fig:procTraj1}.
-\begin{figure}
-  \includegraphics[width=\textwidth]{figures/cut_trajectories_onepanel.png}
+\begin{figure}\begin{center}
+  \includegraphics[width=0.8\textwidth]{figures/cut_trajectories_onepanel.png}
   \caption{\label{fig:procTraj1} Minimally processed trajectories with
   initial non-movign phase cut and everything byond the stated $y$
   threshold cut.}
-\end{figure}
+\end{center}\end{figure}
 
-\begin{figure}
-  \includegraphics[width=\textwidth]{figures/cut_trajectories_samex0y0_onepanel.png}
+\begin{figure}\begin{center}
+  \includegraphics[width=0.8\textwidth]{figures/cut_trajectories_samex0y0_onepanel.png}
   \caption{\label{fig:procTraj2} Same a previous figure but with the
     initial position of the initial trajectory subtracted. Note how
     these do {\em not} appear to overlap better.}
-\end{figure}
+\end{center}\end{figure}
 
 Before doing any more analysis, it is very inconvenient that about
 every third GPS position is recorded as NaN. This is presumably due to
@@ -131,14 +134,14 @@ along the trajectories and display the original GPS locations, the fitted trajec
 (\verb+make_movie_frames.py+ and then using \verb+ffmpeg+ like so:
 \verb+>> ffmpeg -framerate 10 -pattern_type glob -i "frame_*.png" output.mp4+),
 
-\begin{figure}
+\begin{figure}\begin{center}
   \includegraphics[width=\textwidth]{figures/corrected_heading.png}
   \caption{\label{fig:correctHeading} Heading
   shown as a function of time. For the purposes of this plot I have
   ``unrolled'' the angle so that there are no ``jumps'' of 360 degree.}  
-\end{figure}
+\end{center}\end{figure}
 
-\begin{figure}
+\begin{figure}\begin{center}
   \includegraphics[width=\textwidth]{20210303_150314/frames_deg_1/frame_00809.png}
   \caption{\label{fig:frameEx1} Example of the cleaned data. left:
     full trajectory, right: enlargement of the area marked by the
@@ -147,14 +150,14 @@ along the trajectories and display the original GPS locations, the fitted trajec
     arrows GPS heading as well as green arrows showing the IMU
     heading. In this example they coincide very well (which is true
     most of the time).}
-\end{figure}
+\end{center}\end{figure}
 
-\begin{figure}
+\begin{figure}\begin{center}
   \includegraphics[width=\textwidth]{20210303_150314/frames_deg_1/frame_03579.png}
   \caption{\label{fig:frameEx2} Example of the cleaned data as
     above. In this example the headings diverge more (this is one of
     the most extreme examples on this trajectory).}
-\end{figure}
+\end{center}\end{figure}
 
 Figures \ref{fig:frameEx1} and \ref{fig:frameEx2} show two individual
 example frames of teh movie. In the former, the agreement of the headings is
@@ -172,20 +175,20 @@ rather than the extrapolated points; this can be slightly confusing
 where it is not obvious which extrapolated point corresponds to
 which original waypoint.
 
-\begin{figure}
-  \includegraphics[width=\textwidth]{figures/fitted_trajectories_onepanel.png}
+\begin{figure}\begin{center}
+  \includegraphics[width=0.8\textwidth]{figures/fitted_trajectories_onepanel.png}
   \caption{\label{fig:fittedTraj1} Fitted trajectories plotted
     together. The spread of the original data is reproduced quite
     accurately.
     }
-\end{figure}
+\end{center}\end{figure}
 
-\begin{figure}
-  \includegraphics[width=\textwidth]{figures/fitted_trajectories_samex0y0_onepanel.png}
+\begin{figure}\begin{center}
+  \includegraphics[width=0.8\textwidth]{figures/fitted_trajectories_samex0y0_onepanel.png}
   \caption{\label{fig:fittedTraj2} Same as the previous figure but with
     starting points collapsed onto the same point $(0,0)$.
     }
-\end{figure}
+\end{center}\end{figure}
 
 Figure \ref{fig:fittedTraj1} shows the interpolated trajectories
 altogether. The original shape and spread of the trajectories is
@@ -203,12 +206,12 @@ trajectories. To lend a bit of a helping hand I used the interpolated
 $x$ and $y$ coordinates to determine the size of stepes to make (the
 speed in other words). Use \verb+reconstruct.py+. Figure \ref{fig:reconstruct} shows the results.
 
-\begin{figure}
+\begin{figure}\begin{center}
   \includegraphics[width=\textwidth]{figures/reconstructed_all.png}
   \caption{\label{fig:reconstruct} Trajectories reconstructed from IMU
     heading data (orange) compared to the interpolated trajectories
     (blue).}
-\end{figure}
+\end{center}\end{figure}
 
 Even though there are obviously some discrepancies, overall the
 trajectories are very similar, confirming once again that the IMU
